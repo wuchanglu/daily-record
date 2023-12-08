@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>居中-子元素宽高未知</title>
+    <style>
+      .demo1 {
+        margin-top: 20px;
+        width: 300px;
+        height: 300px;
+        background-color: antiquewhite;
+        text-align: center;
+      }
+      .demo1::after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        width: 0;
+        background-color: aqua;
+      }
+      .demo1 .child {
+        display: inline-block;
+        background-color: red;
+        margin: 0 auto;
+        width: fit-content;
+        vertical-align: middle;
+      }
+
+      .demo2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        width: 300px;
+        height: 300px;
+        background-color: antiquewhite;
+      }
+      .demo2 .child {
+        display: inline-block;
+        background-color: red;
+      }
+
+      .demo3 {
+        position: relative;
+        margin-top: 20px;
+        width: 300px;
+        height: 300px;
+        background-color: antiquewhite;
+      }
+      .demo3 .child {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        display: inline-block;
+        background-color: red;
+      }
+      .demo4 {
+        margin-top: 20px;
+        width: 300px;
+        height: 300px;
+        background-color: antiquewhite;
+        display: grid;
+        place-items: center;
+      }
+      .demo4 .child {
+        display: inline-block;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo1">
+      <div class="child">
+        需要一个<br />
+        vertical-align:middle;<br />
+        的兄弟元素作为参考<br />
+        ，并且兄弟元素高度要吃满父容器<br />
+      </div>
+    </div>
+    <div class="demo2">
+      <div class="child">demo2</div>
+    </div>
+    <div class="demo3">
+      <div class="child">demo3demo3demo3demo3</div>
+    </div>
+    <div class="demo4">
+      <div class="child">demo4</div>
+    </div>
+  </body>
+</html>

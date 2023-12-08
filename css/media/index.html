@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="wrap">
+        <div class="list" :style="{transform: `translateX(${translateX}px)`}">
+          <div class="item" v-for="item of list">
+            <div class="item__wrap">
+              <img class="item__pic" :src="item.pic" alt="" />
+              <p class="item__title">{{item.title}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="pagination">
+          <div class="left" :class="{'dis':curIndex<=1}" @click="goLeft">
+            向左
+          </div>
+          <span>{{curIndex}}/{{totalPage}}</span>
+          <div
+            class="right"
+            :class="{'dis':curIndex===totalPage}"
+            @click="goRight"
+          >
+            向右
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const { createApp, ref, onMounted, computed } = Vue;
+
+      createApp({
+        setup() {
+          const list = ref([
+            {
+              pic: "https://cdn.funtown.cn/common/website/1689842859879.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1683798528175.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1689844431902.jpg",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1689844007974.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1686193470899.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1683798605626.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1683798590682.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1683798573644.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1683798561543.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1683798552087.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1683798540506.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1683798519804.png",
+              title: "",
+            },
+            {
+              pic: "https://cdn.funtown.cn/common/website/1683798540506.png",
+              title: "",
+            },
+          ]);
+          list.value.forEach((item, index) => {
+            item.title = `我是标题${index + 1}`;
+          });
+          const curIndex = ref(1);
+          const size = ref(1);
+          const screenWidth = ref(0);
+
+          const totalPage = computed(() => {
+            return Math.ceil(list.value.length / size.value);
+          });
+          const translateX = computed(() => {
+            return -(curIndex.value - 1) * screenWidth.value || 0;
+          });
+          const calcSize = () => {
+            const body = document.querySelector("body");
+            const bodyRect = body.getBoundingClientRect();
+            screenWidth.value = bodyRect.width;
+            const itemDom = document.querySelector("#app .list .item");
+            const itemDomRect = itemDom.getBoundingClientRect();
+            size.value = parseInt(screenWidth.value / itemDomRect.width);
+            curIndex.value = 1;
+          };
+          const goLeft = () => {
+            if (curIndex.value > 1) {
+              curIndex.value--;
+            }
+          };
+          const goRight = () => {
+            if (curIndex.value < totalPage.value) {
+              curIndex.value++;
+            }
+          };
+          onMounted(() => {
+            calcSize();
+            window.addEventListener("resize", calcSize);
+          });
+          return {
+            list,
+            curIndex,
+            totalPage,
+            size,
+            goLeft,
+            goRight,
+            translateX,
+            screenWidth,
+          };
+        },
+      }).mount("#app");
+    </script>
+    <script>
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+    </script>
+  </body>
+</html>
